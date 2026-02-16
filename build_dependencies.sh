@@ -110,6 +110,10 @@ echo "==========================================================================
 echo "empty headers creation"
 cd headers
 echo "current working dir: "${PWD}
+touch Dobby/DobbyProtocol.h
+touch Dobby/DobbyProxy.h
+touch Dobby/Public/Dobby/IDobbyProxy.h
+touch Dobby/IpcService/IpcFactory.h
 echo "files created successfully"
 echo "======================================================================================"
 
