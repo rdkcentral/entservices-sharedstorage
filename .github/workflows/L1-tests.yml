@@ -126,7 +126,7 @@ jobs:
         with:
           repository: rdkcentral/entservices-testframework
           path: entservices-testframework
-          ref: develop
+          ref: feature/RDKEMW-12937_1
           token: ${{ secrets.RDKCM_RDKE }}
 
       - name: Checkout entservices-sharedstorage
@@ -141,7 +141,7 @@ jobs:
         with:
           repository: rdkcentral/entservices-sharedstorage
           path: entservices-sharedstorage
-          ref: develop
+          ref: feature/RDKEMW-13479
 
       - name: Checkout googletest
         uses: actions/checkout@v3
