@@ -18,6 +18,7 @@
  */
 
 #include "SharedStorage.h"
+#include <stdio.h>
 
 #define API_VERSION_NUMBER_MAJOR 1
 #define API_VERSION_NUMBER_MINOR 0
@@ -120,7 +121,7 @@ namespace Plugin {
     void SharedStorage::Deinitialize(PluginHost::IShell* service)
     {
         ASSERT(_service == service);
-
+        printf("Test coverity workflow =%u\n");
         SYSLOG(Logging::Shutdown, (string(_T("SharedStorage::Deinitialize"))));
 
         _service->Unregister(&_notification);

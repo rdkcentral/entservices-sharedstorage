@@ -31,6 +31,8 @@ add_library(${MODULE_NAME} SHARED
         Module.cpp
 )
 
+target_compile_options(${MODULE_NAME} PRIVATE -Wno-error=format)
+
 include_directories(
         ../helpers)
 
@@ -49,6 +51,8 @@ add_library(${PLUGIN_IMPLEMENTATION} SHARED
         Module.cpp
         SharedStorageImplementation.cpp
 )
+
+target_compile_options(${PLUGIN_IMPLEMENTATION} PRIVATE -Wno-error=format)
 
 if (RDK_SERVICE_L2_TEST)
    find_library(TESTMOCKLIB_LIBRARIES NAMES TestMocklib)
