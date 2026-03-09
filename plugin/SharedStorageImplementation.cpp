@@ -20,6 +20,7 @@
 #include "SharedStorageImplementation.h"
 #include "UtilsLogging.h"
 
+
 namespace WPEFramework {
 namespace Plugin {
 
