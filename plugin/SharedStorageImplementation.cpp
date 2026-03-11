@@ -43,6 +43,7 @@ namespace Plugin {
         LOGINFO("SharedStorageImplementation destructor");
         if(_psObject)
         {
+            _psObject->Unregister(&_storeNotification);
             _psObject->Release();
         }
         if(_psInspector)
@@ -59,6 +60,7 @@ namespace Plugin {
         }
         if(_csObject)
         {
+            _csObject->Unregister(&_storeNotification);
             _csObject->Release();
         }
         if (_service != nullptr)
