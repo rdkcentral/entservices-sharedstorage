@@ -29,6 +29,7 @@ set (TEST_SRC
     tests/test_UtilsFile.cpp
 )
 
+
 set (TEST_LIB
     ${NAMESPACE}Plugins::${NAMESPACE}Plugins
 )
