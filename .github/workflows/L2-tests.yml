@@ -450,7 +450,6 @@ jobs:
           -DCMAKE_DISABLE_FIND_PACKAGE_RBus=ON
           -DPLUGIN_CLOUDSTORE=ON
           -DUSE_THUNDER_R4=ON
-          -DPLUGIN_L2Tests=ON
           -DRDK_SERVICE_L2_TEST=ON
           -DDS_FOUND=ON
           -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
@@ -537,7 +536,6 @@ jobs:
           -DCMAKE_DISABLE_FIND_PACKAGE_RBus=ON
           -DPLUGIN_PERSISTENTSTORE=ON
           -DUSE_THUNDER_R4=ON
-          -DPLUGIN_L2Tests=ON
           -DRDK_SERVICE_L2_TEST=${{env.RDK_SERVICE_L2_TEST}}
           -DDS_FOUND=ON
           -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
