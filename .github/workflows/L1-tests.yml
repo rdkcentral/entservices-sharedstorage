@@ -140,7 +140,7 @@ jobs:
         with:
           repository: rdkcentral/entservices-sharedstorage
           path: entservices-sharedstorage
-          ref: feature/RDKEMW-16743
+          ref: develop
 
       - name: Checkout googletest
         uses: actions/checkout@v3
