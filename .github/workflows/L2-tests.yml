@@ -335,6 +335,7 @@ jobs:
           -DCMAKE_INSTALL_PREFIX="$GITHUB_WORKSPACE/install/usr"
           -DCMAKE_MODULE_PATH="$GITHUB_WORKSPACE/install/tools/cmake"
           -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+          -DRDK_SERVICES_L1_TEST=ON
           -DRDK_SERVICE_L2_TEST=ON
           -DCMAKE_CXX_FLAGS="
           -I $GITHUB_WORKSPACE/entservices-testframework/Tests/headers
@@ -643,7 +644,7 @@ jobs:
           -DPLUGIN_OCICONTAINER=ON
           -DDS_FOUND=ON
           -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
-          -DCMAKE_LIBRARY_PATH="$GITHUB_WORKSPACE/install/usr/lib"
+          -DTESTMOCKLIB_LIBRARIES="$GITHUB_WORKSPACE/install/usr/lib/libTestMocklib.so"
           &&
           cmake --build build/entservices-sharedstorage -j6
           &&
