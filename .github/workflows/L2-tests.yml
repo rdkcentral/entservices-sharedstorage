@@ -335,7 +335,6 @@ jobs:
           -DCMAKE_INSTALL_PREFIX="$GITHUB_WORKSPACE/install/usr"
           -DCMAKE_MODULE_PATH="$GITHUB_WORKSPACE/install/tools/cmake"
           -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
-          -DRDK_SERVICES_L1_TEST=ON
           -DRDK_SERVICE_L2_TEST=ON
           -DCMAKE_CXX_FLAGS="
           -I $GITHUB_WORKSPACE/entservices-testframework/Tests/headers
@@ -344,6 +343,18 @@ jobs:
           cmake --build build/mocks -j8
           &&
           cmake --install build/mocks
+
+      - name: Build SecureStorageServerMock library
+        run: |
+          clang++ -fPIC -std=c++14 -shared \
+            -I $GITHUB_WORKSPACE/entservices-testframework/Tests/mocks \
+            -I $GITHUB_WORKSPACE/install/usr/include \
+            -I $GITHUB_WORKSPACE/build/mocks \
+            $GITHUB_WORKSPACE/entservices-testframework/Tests/mocks/SecureStorageServerMock.cpp \
+            $GITHUB_WORKSPACE/build/mocks/secure_storage.pb.cc \
+            $GITHUB_WORKSPACE/build/mocks/secure_storage.grpc.pb.cc \
+            -lgrpc++ -lprotobuf \
+            -o $GITHUB_WORKSPACE/install/usr/lib/libSecureStorageMock.so
 
       - name: Checkout entservices-helpers
         uses: actions/checkout@v3
@@ -644,7 +655,7 @@ jobs:
           -DPLUGIN_OCICONTAINER=ON
           -DDS_FOUND=ON
           -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
-          -DTESTMOCKLIB_LIBRARIES="$GITHUB_WORKSPACE/install/usr/lib/libTestMocklib.so"
+          "-DTESTMOCKLIB_LIBRARIES=$GITHUB_WORKSPACE/install/usr/lib/libTestMocklib.so;$GITHUB_WORKSPACE/install/usr/lib/libSecureStorageMock.so"
           &&
           cmake --build build/entservices-sharedstorage -j6
           &&
