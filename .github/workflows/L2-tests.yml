@@ -643,6 +643,7 @@ jobs:
           -DPLUGIN_OCICONTAINER=ON
           -DDS_FOUND=ON
           -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+          -DCMAKE_LIBRARY_PATH="$GITHUB_WORKSPACE/install/usr/lib"
           &&
           cmake --build build/entservices-sharedstorage -j6
           &&
@@ -833,6 +834,17 @@ jobs:
         run: |
           export PATH="$GITHUB_WORKSPACE/install/usr/bin:${PATH}"
           $GITHUB_WORKSPACE/entservices-testframework/Tests/L2Tests/pact/install-verifier-cli.sh
+
+      - name: Diagnose L2Tests libraries
+        run: |
+          echo "=== WPEFrameworkL2TestsIN.so ==="
+          ls -la $GITHUB_WORKSPACE/install/usr/lib/*L2* 2>/dev/null || echo "NOT FOUND in usr/lib"
+          echo "=== WPEFrameworkL2Tests.so (Thunder plugin) ==="
+          ls -la $GITHUB_WORKSPACE/install/usr/lib/wpeframework/plugins/*L2* 2>/dev/null || echo "NOT FOUND in plugins"
+          echo "=== ldd WPEFrameworkL2TestsIN ==="
+          LD_LIBRARY_PATH=$GITHUB_WORKSPACE/install/usr/lib:$GITHUB_WORKSPACE/install/usr/lib/wpeframework/plugins:${LD_LIBRARY_PATH} ldd $GITHUB_WORKSPACE/install/usr/lib/libWPEFrameworkL2TestsIN.so 2>/dev/null || echo "ldd failed"
+          echo "=== ldd WPEFrameworkL2Tests plugin ==="
+          LD_LIBRARY_PATH=$GITHUB_WORKSPACE/install/usr/lib:$GITHUB_WORKSPACE/install/usr/lib/wpeframework/plugins:${LD_LIBRARY_PATH} ldd $GITHUB_WORKSPACE/install/usr/lib/wpeframework/plugins/libWPEFrameworkL2Tests.so 2>/dev/null || echo "ldd failed"
 
       - name: Run unit tests without valgrind
         run: >
