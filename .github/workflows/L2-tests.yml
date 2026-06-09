@@ -344,16 +344,16 @@ jobs:
           &&
           cmake --install build/mocks
 
-      - name: Build SecureStorageServerMock library
+      - name: Build SecureStorage mock library
         run: |
-          clang++ -fPIC -std=c++14 -shared \
-            -I $GITHUB_WORKSPACE/entservices-testframework/Tests/mocks \
-            -I $GITHUB_WORKSPACE/install/usr/include \
-            -I $GITHUB_WORKSPACE/build/mocks \
-            $GITHUB_WORKSPACE/entservices-testframework/Tests/mocks/SecureStorageServerMock.cpp \
+          g++ -std=c++17 -shared -fPIC \
             $GITHUB_WORKSPACE/build/mocks/secure_storage.pb.cc \
             $GITHUB_WORKSPACE/build/mocks/secure_storage.grpc.pb.cc \
-            -lgrpc++ -lprotobuf \
+            $GITHUB_WORKSPACE/entservices-testframework/Tests/mocks/SecureStorageServerMock.cpp \
+            -I $GITHUB_WORKSPACE/entservices-testframework/Tests/mocks \
+            -I $GITHUB_WORKSPACE/build/mocks \
+            -I $GITHUB_WORKSPACE/install/usr/include \
+            -lprotobuf -lgrpc++ -lpthread \
             -o $GITHUB_WORKSPACE/install/usr/lib/libSecureStorageMock.so
 
       - name: Checkout entservices-helpers
@@ -463,7 +463,8 @@ jobs:
           -DPLUGIN_CLOUDSTORE=ON
           -DUSE_THUNDER_R4=ON
           -DPLUGIN_L2Tests=ON
-          -DRDK_SERVICE_L2_TEST=OFF
+          -DRDK_SERVICE_L2_TEST=ON
+          -DTESTMOCKLIB_LIBRARIES="$GITHUB_WORKSPACE/install/usr/lib/libSecureStorageMock.so"
           -DDS_FOUND=ON
           -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
           &&
@@ -655,7 +656,7 @@ jobs:
           -DPLUGIN_OCICONTAINER=ON
           -DDS_FOUND=ON
           -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
-          "-DTESTMOCKLIB_LIBRARIES=$GITHUB_WORKSPACE/install/usr/lib/libTestMocklib.so;$GITHUB_WORKSPACE/install/usr/lib/libSecureStorageMock.so"
+          -DTESTMOCKLIB_LIBRARIES="$GITHUB_WORKSPACE/install/usr/lib/libTestMocklib.so;$GITHUB_WORKSPACE/install/usr/lib/libSecureStorageMock.so"
           &&
           cmake --build build/entservices-sharedstorage -j6
           &&
