@@ -31,14 +31,13 @@ add_library(${MODULE_NAME} SHARED
         Module.cpp
 )
 
-include_directories(
-        ../helpers)
-
 find_package(${NAMESPACE}Plugins REQUIRED)
+find_package(${NAMESPACE}Helpers REQUIRED)
 find_package(${NAMESPACE}Definitions REQUIRED)
 target_link_libraries(${MODULE_NAME} PRIVATE
         ${NAMESPACE}Plugins::${NAMESPACE}Plugins
         ${NAMESPACE}Definitions::${NAMESPACE}Definitions
+        ${NAMESPACE}::${NAMESPACE}Helpers
 )
 
 install(TARGETS ${MODULE_NAME}
@@ -63,6 +62,7 @@ endif (RDK_SERVICES_L2_TEST)
 target_link_libraries(${PLUGIN_IMPLEMENTATION} PRIVATE
         ${NAMESPACE}Plugins::${NAMESPACE}Plugins
         ${NAMESPACE}Definitions::${NAMESPACE}Definitions
+        ${NAMESPACE}::${NAMESPACE}Helpers
 )
 
 install(TARGETS ${PLUGIN_IMPLEMENTATION}
