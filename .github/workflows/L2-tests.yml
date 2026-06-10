@@ -452,7 +452,7 @@ jobs:
           -DUSE_THUNDER_R4=ON
           -DPLUGIN_L2Tests=ON
           -DRDK_SERVICE_L2_TEST=ON
-          -DTESTMOCKLIB_LIBRARIES="$GITHUB_WORKSPACE/install/usr/lib/libSecureStorageMock.so"
+          -DTESTMOCKLIB_LIBRARIES="$GITHUB_WORKSPACE/install/usr/lib/libTestMocklib.so"
           -DDS_FOUND=ON
           -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
           &&
@@ -644,7 +644,7 @@ jobs:
           -DPLUGIN_OCICONTAINER=ON
           -DDS_FOUND=ON
           -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
-          -DTESTMOCKLIB_LIBRARIES="$GITHUB_WORKSPACE/install/usr/lib/libTestMocklib.so;$GITHUB_WORKSPACE/install/usr/lib/libSecureStorageMock.so"
+          -DTESTMOCKLIB_LIBRARIES="$GITHUB_WORKSPACE/install/usr/lib/libTestMocklib.so"
           &&
           cmake --build build/entservices-sharedstorage -j6
           &&
