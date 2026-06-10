@@ -343,18 +343,16 @@ jobs:
           cmake --build build/mocks -j8
           &&
           cmake --install build/mocks
-
-      - name: Build SecureStorage mock library
-        run: |
-          g++ -std=c++17 -shared -fPIC \
-            $GITHUB_WORKSPACE/build/mocks/secure_storage.pb.cc \
-            $GITHUB_WORKSPACE/build/mocks/secure_storage.grpc.pb.cc \
-            $GITHUB_WORKSPACE/entservices-testframework/Tests/mocks/SecureStorageServerMock.cpp \
-            -I $GITHUB_WORKSPACE/entservices-testframework/Tests/mocks \
-            -I $GITHUB_WORKSPACE/build/mocks \
-            -I $GITHUB_WORKSPACE/install/usr/include \
-            -lprotobuf -lgrpc++ -lpthread \
-            -o $GITHUB_WORKSPACE/install/usr/lib/libSecureStorageMock.so
+          &&
+          g++ -std=c++17 -shared -fPIC
+          $GITHUB_WORKSPACE/build/mocks/secure_storage.pb.cc
+          $GITHUB_WORKSPACE/build/mocks/secure_storage.grpc.pb.cc
+          $GITHUB_WORKSPACE/entservices-testframework/Tests/mocks/SecureStorageServerMock.cpp
+          -I $GITHUB_WORKSPACE/entservices-testframework/Tests/mocks
+          -I $GITHUB_WORKSPACE/build/mocks
+          -I $GITHUB_WORKSPACE/install/usr/include
+          -lprotobuf -lgrpc++ -lpthread
+          -o $GITHUB_WORKSPACE/install/usr/lib/libSecureStorageMock.so
 
       - name: Checkout entservices-helpers
         uses: actions/checkout@v3
@@ -848,37 +846,13 @@ jobs:
           export PATH="$GITHUB_WORKSPACE/install/usr/bin:${PATH}"
           $GITHUB_WORKSPACE/entservices-testframework/Tests/L2Tests/pact/install-verifier-cli.sh
 
-      - name: Diagnose L2Tests libraries
-        run: |
-          echo "=== WPEFrameworkL2TestsIN.so ==="
-          ls -la $GITHUB_WORKSPACE/install/usr/lib/*L2* 2>/dev/null || echo "NOT FOUND in usr/lib"
-          echo "=== WPEFrameworkL2Tests.so (Thunder plugin) ==="
-          ls -la $GITHUB_WORKSPACE/install/usr/lib/wpeframework/plugins/*L2* 2>/dev/null || echo "NOT FOUND in plugins"
-          echo "=== ldd WPEFrameworkL2TestsIN ==="
-          LD_LIBRARY_PATH=$GITHUB_WORKSPACE/install/usr/lib:$GITHUB_WORKSPACE/install/usr/lib/wpeframework/plugins:${LD_LIBRARY_PATH} ldd $GITHUB_WORKSPACE/install/usr/lib/libWPEFrameworkL2TestsIN.so 2>/dev/null || echo "ldd failed"
-          echo "=== ldd WPEFrameworkL2Tests plugin ==="
-          LD_LIBRARY_PATH=$GITHUB_WORKSPACE/install/usr/lib:$GITHUB_WORKSPACE/install/usr/lib/wpeframework/plugins:${LD_LIBRARY_PATH} ldd $GITHUB_WORKSPACE/install/usr/lib/wpeframework/plugins/libWPEFrameworkL2Tests.so 2>/dev/null || echo "ldd failed"
-
       - name: Run unit tests without valgrind
         run: >
           PATH=$GITHUB_WORKSPACE/install/usr/bin:${PATH}
           LD_LIBRARY_PATH=$GITHUB_WORKSPACE/install/usr/lib:$GITHUB_WORKSPACE/install/usr/lib/wpeframework/plugins:${LD_LIBRARY_PATH}
-          gdb -batch --return-child-result -ex "set logging file $GITHUB_WORKSPACE/gdb_log.txt" -ex "set logging on" -ex "run" -ex "bt" -ex "info registers" -ex "quit" --args RdkServicesL2Test 2>&1 | tee $GITHUB_WORKSPACE/gdb_output.log &&
+          RdkServicesL2Test &&
           cp -rf $(pwd)/rdkL2TestResults.json $GITHUB_WORKSPACE/rdkL2TestResultsWithoutValgrind.json &&
           rm -rf $(pwd)/rdkL2TestResults.json
-
-      - name: Capture detailed crash info on failure
-        if: failure()
-        run: |
-          echo "Test failed, capturing additional debugging information..."
-          echo "Core dumps:" >> $GITHUB_WORKSPACE/debug_info.log
-          find . -name "core*" -type f >> $GITHUB_WORKSPACE/debug_info.log 2>/dev/null || echo "No core dumps found" >> $GITHUB_WORKSPACE/debug_info.log
-          echo "System info:" >> $GITHUB_WORKSPACE/debug_info.log
-          uname -a >> $GITHUB_WORKSPACE/debug_info.log
-          echo "Memory info:" >> $GITHUB_WORKSPACE/debug_info.log
-          free -h >> $GITHUB_WORKSPACE/debug_info.log
-          echo "Disk space:" >> $GITHUB_WORKSPACE/debug_info.log
-          df -h >> $GITHUB_WORKSPACE/debug_info.log
 
       - name: Run unit tests with valgrind
         if: ${{ !env.ACT && inputs.caller_source != 'testframework' }}
@@ -937,17 +911,3 @@ jobs:
             rdkL2TestResultsWithoutValgrind.json
             rdkL2TestResultsWithValgrind.json
           if-no-files-found: warn
-
-
-      # The below steps are for uploading full build results for debugging purposes.
-      - name: Upload build
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: Build results
-          path: |
-            gdb_log.txt
-            gdb_output.log
-            debug_info.log
-
-      
