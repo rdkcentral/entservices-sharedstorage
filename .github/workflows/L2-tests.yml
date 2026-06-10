@@ -343,16 +343,6 @@ jobs:
           cmake --build build/mocks -j8
           &&
           cmake --install build/mocks
-          &&
-          g++ -std=c++17 -shared -fPIC
-          $GITHUB_WORKSPACE/build/mocks/secure_storage.pb.cc
-          $GITHUB_WORKSPACE/build/mocks/secure_storage.grpc.pb.cc
-          $GITHUB_WORKSPACE/entservices-testframework/Tests/mocks/SecureStorageServerMock.cpp
-          -I $GITHUB_WORKSPACE/entservices-testframework/Tests/mocks
-          -I $GITHUB_WORKSPACE/build/mocks
-          -I $GITHUB_WORKSPACE/install/usr/include
-          -lprotobuf -lgrpc++ -lpthread
-          -o $GITHUB_WORKSPACE/install/usr/lib/libSecureStorageMock.so
 
       - name: Checkout entservices-helpers
         uses: actions/checkout@v3
