@@ -118,7 +118,7 @@ jobs:
         with:
           repository: rdkcentral/entservices-testframework
           path: entservices-testframework
-          ref: 1.0.14
+          ref: 1.0.18
 
       - name: Checkout googletest
         if: steps.cache.outputs.cache-hit != 'true'
@@ -449,6 +449,7 @@ jobs:
           -DUSE_THUNDER_R4=ON
           -DPLUGIN_L2Tests=ON
           -DRDK_SERVICE_L2_TEST=ON
+          -DCMAKE_PREFIX_PATH="$GITHUB_WORKSPACE/install/usr"
           -DDS_FOUND=ON
           -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
           &&
@@ -640,6 +641,7 @@ jobs:
           -DPLUGIN_OCICONTAINER=ON
           -DDS_FOUND=ON
           -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+          -DCMAKE_PREFIX_PATH="$GITHUB_WORKSPACE/install/usr"
           &&
           cmake --build build/entservices-sharedstorage -j6
           &&
