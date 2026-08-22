@@ -15,6 +15,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+
 cmake_minimum_required(VERSION 3.8)
 set(PLUGIN_NAME L1TestsIN)
 set(MODULE_NAME ${NAMESPACE}${PLUGIN_NAME})
@@ -27,6 +28,7 @@ find_package(${NAMESPACE}Plugins REQUIRED)
 set (TEST_SRC
     tests/test_UtilsFile.cpp
 )
+
 
 set (TEST_LIB
     ${NAMESPACE}Plugins::${NAMESPACE}Plugins
