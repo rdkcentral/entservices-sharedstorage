@@ -20,7 +20,7 @@
 #include "SharedStorageImplementation.h"
 #include "UtilsLogging.h"
 
-namespace WPEFramework {
+namespace Thunder {
 namespace Plugin {
 
     SERVICE_REGISTRATION(SharedStorageImplementation, 1, 0);
@@ -136,7 +136,7 @@ namespace Plugin {
             result = Core::ERROR_NONE;
     
             // Get interface for IStore2
-            _psObject = service->QueryInterfaceByCallsign<WPEFramework::Exchange::IStore2>("org.rdk.PersistentStore");
+            _psObject = service->QueryInterfaceByCallsign<Thunder::Exchange::IStore2>("org.rdk.PersistentStore");
             if (_psObject != nullptr)
             {
                 _psObject->Register(&_storeNotification);
@@ -145,7 +145,7 @@ namespace Plugin {
             {
                 LOGERR("_psObject is null \n");
             }
-            _psInspector = service->QueryInterfaceByCallsign<WPEFramework::Exchange::IStoreInspector>("org.rdk.PersistentStore");
+            _psInspector = service->QueryInterfaceByCallsign<Thunder::Exchange::IStoreInspector>("org.rdk.PersistentStore");
             if(_psInspector == nullptr)
             {
                 LOGERR("_psInspector is null \n");
@@ -154,7 +154,7 @@ namespace Plugin {
             {
                 LOGINFO("_psInspector success ");
             }
-            _psLimit = service->QueryInterfaceByCallsign<WPEFramework::Exchange::IStoreLimit>("org.rdk.PersistentStore");
+            _psLimit = service->QueryInterfaceByCallsign<Thunder::Exchange::IStoreLimit>("org.rdk.PersistentStore");
             if(_psLimit == nullptr)
             {
                 LOGERR("_psLimit is null \n");
@@ -163,7 +163,7 @@ namespace Plugin {
             {
                 LOGINFO("_psLimit success ");
             }
-            _psCache = service->QueryInterfaceByCallsign<WPEFramework::Exchange::IStoreCache>("org.rdk.PersistentStore");
+            _psCache = service->QueryInterfaceByCallsign<Thunder::Exchange::IStoreCache>("org.rdk.PersistentStore");
             if(_psCache == nullptr)
             {
                 LOGERR("_psCache is null \n");
@@ -174,7 +174,7 @@ namespace Plugin {
             }
 
             // Establish communication with CloudStore
-            _csObject = service->QueryInterfaceByCallsign<WPEFramework::Exchange::IStore2>("org.rdk.CloudStore");
+            _csObject = service->QueryInterfaceByCallsign<Thunder::Exchange::IStore2>("org.rdk.CloudStore");
             if (_csObject != nullptr)
             {
                 _csObject->Register(&_storeNotification);
@@ -194,11 +194,11 @@ namespace Plugin {
 
     Exchange::IStore2* SharedStorageImplementation::getRemoteStoreObject(const Exchange::ISharedStorageLimit::ScopeType eScope)
     {
-        if( (eScope == WPEFramework::Exchange::ISharedStorageLimit::ScopeType::DEVICE) && _psObject)
+        if( (eScope == Thunder::Exchange::ISharedStorageLimit::ScopeType::DEVICE) && _psObject)
         {
             return _psObject;
         }
-        else if( (eScope == WPEFramework::Exchange::ISharedStorageLimit::ScopeType::ACCOUNT) && _csObject)
+        else if( (eScope == Thunder::Exchange::ISharedStorageLimit::ScopeType::ACCOUNT) && _csObject)
         {
             return _csObject;
         }
@@ -405,7 +405,7 @@ namespace Plugin {
         ASSERT (nullptr != _psInspector);
         if (nullptr != _psInspector)
         {
-            status = _psInspector->GetStorageSizes((Exchange::IStore2::ScopeType)eScope, (WPEFramework::Exchange::IStoreInspector::INamespaceSizeIterator*&)storageList);
+            status = _psInspector->GetStorageSizes((Exchange::IStore2::ScopeType)eScope, (Thunder::Exchange::IStoreInspector::INamespaceSizeIterator*&)storageList);
             if (status != Core::ERROR_NONE) {
                 TRACE(Trace::Error, (_T("%s: Status: %d"), __FUNCTION__, status));
             }
@@ -472,4 +472,4 @@ namespace Plugin {
     }
 
 } // namespace Plugin
-} // namespace WPEFramework
+} // namespace Thunder

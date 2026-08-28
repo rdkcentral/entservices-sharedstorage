@@ -26,7 +26,7 @@
 #include <interfaces/json/JSharedStorageLimit.h>
 #include <interfaces/json/JSharedStorageCache.h>
 
-namespace WPEFramework {
+namespace Thunder {
 namespace Plugin {
 
     class SharedStorage : public PluginHost::IPlugin, public PluginHost::JSONRPC {
@@ -140,4 +140,4 @@ namespace Plugin {
     };
 
 } // namespace Plugin
-} // namespace WPEFramework
+} // namespace Thunder

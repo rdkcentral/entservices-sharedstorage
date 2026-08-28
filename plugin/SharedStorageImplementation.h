@@ -25,7 +25,7 @@
 #include <interfaces/IStoreCache.h>
 #include <interfaces/IConfiguration.h>
 
-namespace WPEFramework {
+namespace Thunder {
 namespace Plugin {
 
     class SharedStorageImplementation : public Exchange::ISharedStorage,
@@ -169,4 +169,4 @@ namespace Plugin {
 };
 
 } // namespace Plugin
-} // namespace WPEFramework
+} // namespace Thunder
