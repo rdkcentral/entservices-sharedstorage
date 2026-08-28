@@ -233,7 +233,7 @@ sharedStorage->Register(&myNotification);
 ### For Platform Providers
 - **Modular Architecture**: Plugin can be enabled/disabled via build configuration
 - **Cloud Integration**: Built-in cloud storage support via CloudStore backend
-- **Standards-Based**: Uses Thunder/WPEFramework standard patterns
+- **Standards-Based**: Uses Thunder standard patterns
 - **Process Isolation**: Out-of-process implementation protects main Thunder process
 
 ## Performance and Reliability Characteristics
@@ -320,7 +320,7 @@ sharedStorage->Register(&myNotification);
 - **Required Plugins**: 
   - PersistentStore (for DEVICE scope)
   - CloudStore (for ACCOUNT scope, optional)
-- **Thunder Version**: Compatible with WPEFramework R4+
+- **Thunder Version**: Compatible with Thunder R4+
 - **System Requirements**: Standard RDK environment
 
 ## Version and Compatibility

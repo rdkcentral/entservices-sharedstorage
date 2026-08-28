@@ -2,7 +2,7 @@
 
 ## Overview
 
-The SharedStorage plugin is a WPEFramework (Thunder) plugin that provides a unified abstraction layer for key-value storage operations across multiple storage backends. It acts as a facade to consolidate access to both device-local (PersistentStore) and cloud-based (CloudStore) storage systems, enabling applications to manage data with different scope requirements through a single, consistent interface.
+The SharedStorage plugin is a Thunder plugin that provides a unified abstraction layer for key-value storage operations across multiple storage backends. It acts as a facade to consolidate access to both device-local (PersistentStore) and cloud-based (CloudStore) storage systems, enabling applications to manage data with different scope requirements through a single, consistent interface.
 
 ## System Architecture
 
@@ -87,7 +87,7 @@ Backend Store (PS/CS) → ValueChanged Event →
 
 ## Plugin Framework Integration
 
-### WPEFramework/Thunder Integration
+### Thunder/Thunder Integration
 
 The plugin integrates with Thunder framework through:
 
@@ -113,7 +113,7 @@ SharedStorage (IPlugin, JSONRPC)
 
 ### External Dependencies
 
-1. **WPEFramework Core**
+1. **Thunder Core**
    - Core::ERROR_* status codes
    - Core::IWorkerPool for async dispatch
    - RPC::IRemoteConnection for OOP communication
@@ -176,7 +176,7 @@ The `getRemoteStoreObject()` method performs dynamic routing based on scope valu
 
 ## Build System Integration
 
-- CMake-based build with Thunder/WPEFramework dependencies
+- CMake-based build with Thunder dependencies
 - Separate libraries: Plugin (SharedStorage) and Implementation (SharedStorageImplementation)
 - Installed to: `lib/${STORAGE_DIRECTORY}/plugins`
 - Test support with mock library integration (RDK_SERVICE_L2_TEST)
