@@ -653,7 +653,7 @@ TEST_F(SharedStorage_L2testDeviceScope, deleteNamespace_DEVICE_Scope_JSONRPC)
 TEST_F(SharedStorage_L2test, SetValue_ACCOUNT_Scope_COMRPC)
 {
     uint32_t signalled = SHARED_STORAGE_STATUS_INVALID;
-    Core::Sink<SharedStorageNotificationHandler> notify;
+    Core::SinkType<SharedStorageNotificationHandler> notify;
     uint32_t status = Core::ERROR_GENERAL;
     const auto kKey = "key1";
     const auto kValue = "value1";
@@ -848,7 +848,7 @@ TEST_F(SharedStorage_L2test, DeleteNamespace_ACCOUNT_Scope_COMRPC)
 TEST_F(SharedStorage_L2testDeviceScope, SetValue_DEVICE_Scope_COMRPC)
 {
     uint32_t signalled = SHARED_STORAGE_STATUS_INVALID;
-    Core::Sink<SharedStorageNotificationHandler> notify;
+    Core::SinkType<SharedStorageNotificationHandler> notify;
     uint32_t status = Core::ERROR_GENERAL;
     int interface = 0; // 0 for ISharedStorage
     const auto kKey = "key1";

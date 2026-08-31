@@ -131,8 +131,8 @@ namespace Plugin {
         PluginHost::IShell* _service;
         uint32_t _connectionId;
         Exchange::ISharedStorage* _store2;
-        Core::Sink<Store2Notification> _store2Sink;
-        Core::Sink<RemoteConnectionNotification> _notification;
+        Core::SinkType<Store2Notification> _store2Sink;
+        Core::SinkType<RemoteConnectionNotification> _notification;
         Exchange::IConfiguration* configure;
         Exchange::ISharedStorageInspector* _storeInspector;
         Exchange::ISharedStorageLimit* _storeLimit;

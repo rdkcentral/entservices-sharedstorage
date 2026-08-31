@@ -158,7 +158,7 @@ namespace Plugin {
     private:
         mutable Core::CriticalSection _adminLock;
         PluginHost::IShell* _service;
-        Core::Sink<Store2Notification> _storeNotification;
+        Core::SinkType<Store2Notification> _storeNotification;
         Exchange::IStore2* _psObject;
         Exchange::IStoreInspector* _psInspector;
         Exchange::IStoreLimit* _psLimit;
