@@ -18,7 +18,15 @@
 cmake_minimum_required(VERSION 3.14)
 
 set(PLUGIN_NAME SharedStorage)
-find_package(Thunder REQUIRED)
+find_package(Thunder QUIET)
+
+if(NOT Thunder_FOUND)
+    find_package(WPEFramework QUIET)
+    if(NOT WPEFramework_FOUND)
+        message(FATAL_ERROR "Neither Thunder nor WPEFramework found in sysroot")
+    endif()
+    add_compile_definitions(Thunder=WPEFramework)
+endif()
 set(MODULE_NAME ${NAMESPACE}${PLUGIN_NAME})
 
 set(CMAKE_CXX_STANDARD 11)
