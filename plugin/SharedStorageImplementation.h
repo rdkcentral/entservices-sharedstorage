@@ -106,13 +106,8 @@ namespace Plugin {
 
             public:
                 static Core::ProxyType<Core::IDispatch> Create(SharedStorageImplementation* sharedStorageImplementation, Event event, JsonObject params) {
-#if defined(USE_THUNDER_R4) || defined(USE_THUNDER_R5)
-    return (Core::ProxyType<Core::IDispatch>(
-        Core::ProxyType<Job>::Create(sharedStorageImplementation, event, params)));
-#else
-    return (Core::proxy_cast<Core::IDispatch>(
-        Core::ProxyType<Job>::Create(sharedStorageImplementation, event, params)));
-#endif
+                    return (Core::ProxyType<Core::IDispatch>(
+                        Core::ProxyType<Job>::Create(sharedStorageImplementation, event, params)));
                 }
 
                 virtual void Dispatch() {
