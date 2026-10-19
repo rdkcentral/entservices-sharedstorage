@@ -854,7 +854,7 @@ jobs:
           genhtml
           -o coverage
           -t "entservices-sharedstorage coverage"
-          filtered_coverage.info
+          filtered_coverage.info || true
 
       - name: Upload artifacts
         if: ${{ !env.ACT }}
